@@ -1,0 +1,82 @@
+"""OpenAI vector-store access: resolve ids, read parsed chunks, upload files.
+
+Reading uses the vector-store file-content endpoint, so a knowledge-base scan
+audits exactly what the store remembers (the parsed chunk text), not the
+original upload. All functions here are seams the test suite monkeypatches;
+none of them ever place chunk text into a return value that leaves a tool.
+"""
+import os
+import re
+from typing import Any, Dict, Iterator, Optional, Tuple
+
+_VS_SUFFIX = re.compile(r"_vs_([A-Za-z0-9_\-]+)$")
+_CACHE_FILENAME = ".vector_store_id"
+DEFAULT_STORE_NAME = "safe-rag-knowledge"
+
+
+def _client():
+    from openai import OpenAI
+    return OpenAI()
+
+
+def resolve_vector_store_id(agent_dir: str, explicit: Optional[str] = None) -> Optional[str]:
+    """Resolution order: explicit arg > RLG_VECTOR_STORE_ID env > the agent's
+    files folder renamed by agency-swarm to `files_vs_<id>` > local cache file
+    written by a previous SafeIngestDocument run."""
+    if explicit:
+        return explicit
+    env = os.environ.get("RLG_VECTOR_STORE_ID")
+    if env:
+        return env
+    if os.path.isdir(agent_dir):
+        for name in sorted(os.listdir(agent_dir)):
+            m = _VS_SUFFIX.search(name)
+            if m and os.path.isdir(os.path.join(agent_dir, name)):
+                return m.group(1)
+        cache = os.path.join(agent_dir, _CACHE_FILENAME)
+        if os.path.isfile(cache):
+            with open(cache, "r", encoding="utf-8") as fh:
+                cached = fh.read().strip()
+            if cached:
+                return cached
+    return None
+
+
+def get_or_create_vector_store(agent_dir: str, explicit: Optional[str] = None) -> Tuple[str, bool]:
+    """Resolve the agent's vector store, creating one if none exists yet.
+
+    Returns (vector_store_id, created). A created id is cached next to the
+    agent so later tool calls and scans find it again.
+    """
+    vs_id = resolve_vector_store_id(agent_dir, explicit=explicit)
+    if vs_id:
+        return vs_id, False
+    store = _client().vector_stores.create(name=DEFAULT_STORE_NAME)
+    try:
+        with open(os.path.join(agent_dir, _CACHE_FILENAME), "w", encoding="utf-8") as fh:
+            fh.write(store.id)
+    except OSError:
+        pass  # read-only filesystem: the id is still returned and usable
+    return store.id, True
+
+
+def iter_vector_store_chunks(vector_store_id: str) -> Iterator[Dict[str, Any]]:
+    """Yield {"id", "text", "collection"} for every parsed content chunk."""
+    client = _client()
+    for f in client.vector_stores.files.list(vector_store_id=vector_store_id):
+        label = getattr(f, "filename", None) or f.id
+        content = client.vector_stores.files.content(f.id, vector_store_id=vector_store_id)
+        for i, part in enumerate(content):
+            text = getattr(part, "text", "") or ""
+            if text:
+                yield {"id": f"{label}#chunk{i}", "text": text, "collection": vector_store_id}
+
+
+def upload_file_to_vector_store(vector_store_id: str, path: str) -> str:
+    """Upload a local file and attach it to the vector store. Returns file id."""
+    client = _client()
+    with open(path, "rb") as fh:
+        vs_file = client.vector_stores.files.upload_and_poll(
+            vector_store_id=vector_store_id, file=fh
+        )
+    return vs_file.id

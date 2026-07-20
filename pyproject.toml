@@ -1,0 +1,11 @@
+# only listed properties are used by the system
+
+[project]
+name = "ragleakguard-safe-qna-agent"
+description = "Safe Q&A (RAG) agent: a knowledge-base assistant that scans every document for sensitive data before it can remember it, and audits its own memory on demand. Powered by RAGLeakGuard."
+version = "0.1.0"
+license = { text = "Apache-2.0" }
+keywords = ["agency-swarm", "agencii", "rag", "qna", "security", "pii", "ragleakguard"]
+
+[tool.template]
+version = "0.0.2"

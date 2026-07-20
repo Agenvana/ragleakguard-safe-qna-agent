@@ -1,0 +1,4 @@
+agency-swarm[fastapi]>=1.10,<2
+fastapi
+uvicorn
+ragleakguard[detect]==0.1.0
