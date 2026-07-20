@@ -78,9 +78,9 @@ credits for AI tokens. Running cost is your OpenAI token spend plus FileSearch
 
 This agent diagnoses at the document level. For a formal, human-led
 assessment of your AI data security (scoping, data-flow mapping, remediation
-program, compliance mapping), reach out via the contact configured in
-onboarding. Deploying for your own clients? Point it at your own security
-contact instead, or switch it off.
+program, compliance mapping), start here:
+**[the intake form](https://tally.so/r/obaG5V)**. Deploying for your own
+clients? Point it at your own security contact instead, or switch it off.
 
 ## Credits
 
