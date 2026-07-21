@@ -87,8 +87,9 @@ exists.
 This agent diagnoses at the document level. For a formal, human-led
 assessment of your AI data security (scoping, data-flow mapping, remediation
 program, compliance mapping), start here:
-**[the intake form](https://tally.so/r/obaG5V)**. Deploying for your own
-clients? Point it at your own security contact instead, or switch it off.
+**[the intake form](https://tally.so/r/obaG5V)**. The same goes for managed
+deployment in your own cloud. Deploying for your own clients? Point the
+contact at your own security team instead, or switch it off.
 
 ## Credits
 
