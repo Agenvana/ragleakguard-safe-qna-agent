@@ -8,9 +8,7 @@ venv/
 .idea/
 .vscode/
 
-# knowledge-base contents and runtime state (client data never gets committed)
-safe_rag_agent/files*/*
-!safe_rag_agent/files/.gitkeep
+# runtime state (client data never gets committed)
 .vector_store_id
 .rlg-state.json
 settings.json

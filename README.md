@@ -74,6 +74,14 @@ With your own OpenAI API key configured, Agencii does not deduct platform
 credits for AI tokens. Running cost is your OpenAI token spend plus FileSearch
 ($2.50 per 1k calls) and file-search storage ($0.10/GB/day after 1 GB free).
 
+**Knowledge persistence across redeploys:** the first `SafeIngestDocument`
+call creates the vector store and reports its id. To keep the same knowledge
+base across container redeploys, set that id as `RLG_VECTOR_STORE_ID` in the
+platform environment settings; otherwise a fresh deploy starts a new store
+(the old one still exists in your OpenAI account). File search over the store
+attaches at boot, so retrieval begins on the first restart after the store
+exists.
+
 ## Need more than a scan?
 
 This agent diagnoses at the document level. For a formal, human-led
