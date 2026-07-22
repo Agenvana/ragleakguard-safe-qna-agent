@@ -1,5 +1,10 @@
 # RAGLeakGuard Safe Q&A Agent — the RAG agent that checks what it remembers
 
+[![tests](https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml)
+[![release](https://img.shields.io/github/v/release/Agenvana/ragleakguard-safe-qna-agent)](https://github.com/Agenvana/ragleakguard-safe-qna-agent/releases)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![powered by RAGLeakGuard](https://img.shields.io/badge/powered%20by-RAGLeakGuard-0F172A)](https://github.com/Agenvana/RAGLeakGuard)
+
 A ready-to-deploy [Agency Swarm](https://agency-swarm.ai/) Q&A agency with a
 twist: **every document is scanned for sensitive data BEFORE it can enter the
 knowledge base**, and the knowledge base can be audited on demand. Powered by
