@@ -1,12 +1,5 @@
 # RAGLeakGuard Safe Q&A Agent — the RAG agent that checks what it remembers
 
-<p>
-  <a href="https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml"><img src="https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml/badge.svg" alt="tests" height="20"></a>
-  <a href="https://github.com/Agenvana/ragleakguard-safe-qna-agent/releases"><img src="https://img.shields.io/github/v/release/Agenvana/ragleakguard-safe-qna-agent" alt="release" height="20"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="license" height="20"></a>
-  <a href="https://github.com/Agenvana/RAGLeakGuard"><img src="https://img.shields.io/badge/powered%20by-RAGLeakGuard-0F172A" alt="powered by RAGLeakGuard" height="20"></a>
-</p>
-
 **A question-answering AI with a twist: it checks what it's about to
 remember.** Give it your documents and it answers questions from them, like
 any knowledge-base assistant, except **every document must pass a
@@ -100,6 +93,12 @@ program, compliance mapping), start here:
 **[the intake form](https://tally.so/r/obaG5V)**. The same goes for managed
 deployment in your own cloud. Deploying for your own clients? Point the
 contact at your own security team instead, or switch it off.
+
+## Status
+
+[![tests](https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml)
+[![release](https://img.shields.io/github/v/release/Agenvana/ragleakguard-safe-qna-agent)](https://github.com/Agenvana/ragleakguard-safe-qna-agent/releases)
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 ## Credits
 
