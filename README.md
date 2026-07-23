@@ -1,13 +1,17 @@
 # RAGLeakGuard Safe Q&A Agent — the RAG agent that checks what it remembers
 
-[![tests](https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml)
-[![release](https://img.shields.io/github/v/release/Agenvana/ragleakguard-safe-qna-agent)](https://github.com/Agenvana/ragleakguard-safe-qna-agent/releases)
-[![license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![powered by RAGLeakGuard](https://img.shields.io/badge/powered%20by-RAGLeakGuard-0F172A)](https://github.com/Agenvana/RAGLeakGuard)
+<p>
+  <a href="https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml"><img src="https://github.com/Agenvana/ragleakguard-safe-qna-agent/actions/workflows/tests.yml/badge.svg" alt="tests" height="20"></a>
+  <a href="https://github.com/Agenvana/ragleakguard-safe-qna-agent/releases"><img src="https://img.shields.io/github/v/release/Agenvana/ragleakguard-safe-qna-agent" alt="release" height="20"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="license" height="20"></a>
+  <a href="https://github.com/Agenvana/RAGLeakGuard"><img src="https://img.shields.io/badge/powered%20by-RAGLeakGuard-0F172A" alt="powered by RAGLeakGuard" height="20"></a>
+</p>
 
-A ready-to-deploy [Agency Swarm](https://agency-swarm.ai/) Q&A agency with a
-twist: **every document is scanned for sensitive data BEFORE it can enter the
-knowledge base**, and the knowledge base can be audited on demand. Powered by
+**A question-answering AI with a twist: it checks what it's about to
+remember.** Give it your documents and it answers questions from them, like
+any knowledge-base assistant, except **every document must pass a
+sensitive-data scan before it can enter the knowledge base**, and you can ask
+it to audit its own memory anytime. Powered by
 **[RAGLeakGuard](https://github.com/Agenvana/RAGLeakGuard)**, the open-source
 scanner for AI pipelines and vector stores.
 
@@ -23,8 +27,8 @@ scanner for AI pipelines and vector stores.
 
 ## How it works
 
-Retrieval is standard Agency Swarm RAG: an OpenAI vector store + FileSearch
-(the same mechanism the platform's own knowledge agents use). The difference
+Under the hood it's a standard retrieval setup (an OpenAI vector store with
+file search), the same mechanism most knowledge agents use. The difference
 is the front door:
 
 - `SafeIngestDocument(path, force?)` — scans first, ingests only if clean.
@@ -53,7 +57,7 @@ post-processing. Global + US entities by default; `locale='au'` adds
 Australian identifiers (TFN, ABN, ACN, Medicare, AU phones) with checksum
 validation.
 
-## Quick start (local)
+## Quick start (local, for developers)
 
 Requires **Python 3.12** (agency-swarm needs ≥3.12; ragleakguard's detection
 extra needs <3.13 for prebuilt wheels).
@@ -104,5 +108,5 @@ Built by [Agenvana](https://github.com/Agenvana) on
 [Agency Swarm](https://github.com/VRSEN/agency-swarm) /
 the [agency-starter-template](https://github.com/agency-ai-solutions/agency-starter-template).
 
-License: Apache-2.0. Detection is best-effort; absence of findings is not
-proof of safety.
+License: [Apache-2.0](LICENSE). Detection is best-effort; absence of
+findings is not proof of safety.
