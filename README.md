@@ -84,13 +84,21 @@ python agency.py        # terminal demo
 python -m pytest tests/ -q
 ```
 
-## Deploy on Agencii
+## Deploy
 
-1. Sign up at [agencii.ai](https://agencii.ai/signup?referral=a0d8a28b-56c3-47a4-9ebf-7faa8c2b0caf)
-   (referral link) and install the
-   [Agencii GitHub App](https://github.com/apps/agencii) with access to this repo.
-2. Add `OPENAI_API_KEY` in the Agencii dashboard environment settings.
-3. Push to `main`. The agency deploys as `safe-qna-agent` from `main.py`.
+**Easiest, no technical setup: from the Agencii marketplace.** Open the
+listing, click **Deploy**, fill the short onboarding form, paste your OpenAI
+API key when asked, and start chatting. Build your knowledge base by talking
+to the agent: share a document and say "add this to your knowledge base";
+the scan gate handles the rest.
+
+**From your own copy of this repo** (for builders who want to customize):
+click **Use this template** on GitHub to make your copy, sign up at
+[agencii.ai](https://agencii.ai/signup?referral=a0d8a28b-56c3-47a4-9ebf-7faa8c2b0caf)
+(referral link), install the
+[Agencii GitHub App](https://github.com/apps/agencii) with access to your
+copy, add `OPENAI_API_KEY` in the dashboard environment settings, and push
+to `main`; every push deploys automatically.
 
 With your own OpenAI API key configured, Agencii does not deduct platform
 credits for AI tokens. Running cost is your OpenAI token spend plus FileSearch
