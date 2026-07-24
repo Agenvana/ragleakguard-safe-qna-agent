@@ -56,16 +56,18 @@ Deploy, then type these exact prompts. Only the prompts are scripted: the
 responses are live, and the gate is code, so any phrasing that means
 "remember this" meets the same scan.
 
-1. `Please add /app/README.md to your knowledge base.`
-   Expect a refusal with findings by type and count: this README ships
-   inside the container and deliberately fails its own scan.
-2. `That file is public documentation with no real personal data. I accept the risk; ingest it with force=true.`
+1. `Please add /app/demo/synthetic_knowledge_base.md to your knowledge base.`
+   That's a synthetic company handbook shipped in `demo/`; its appendix
+   contains fake personal records specifically so the gate has something to
+   catch. Expect a refusal with findings by type and count.
+2. `Those records are synthetic test data. I accept the risk; ingest it with force=true.`
    Expect ingestion with the risk acknowledged. Explicit consent is the only
    override.
-3. `Now audit your knowledge base: what does it currently remember?`
+3. `What is the retrieval verification phrase in the handbook?`
+   Expect **ORCHID-LANTERN-27**: proof the answer came from the ingested
+   document, not the model's imagination.
+4. `Now audit your knowledge base: what does it currently remember?`
    Expect a chunk-level report with risk level and fully-masked samples.
-4. Ask it a question about the document; it answers from what it safely
-   remembers.
 
 ## Quick start (local, for developers)
 
