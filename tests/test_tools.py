@@ -71,3 +71,26 @@ def test_default_locale_env_override(monkeypatch):
 def test_planted_fixture_sanity(use_fake_detect):
     findings = use_fake_detect(" ".join(PLANTED.values()))
     assert len(findings) == len(PLANTED)
+
+
+def test_search_knowledge_base_resolves_at_call_time(monkeypatch, tmp_path):
+    from safe_rag_agent.tools.SearchKnowledgeBase import SearchKnowledgeBase
+
+    monkeypatch.setattr(openai_store, "resolve_vector_store_id", lambda d, explicit=None: "vs_live")
+    monkeypatch.setattr(
+        openai_store, "search_vector_store",
+        lambda vs_id, q, max_results=5: [{"file": "handbook.md", "score": 0.9,
+                                          "text": "the verification phrase is ORCHID-LANTERN-27"}],
+    )
+    parsed = json.loads(SearchKnowledgeBase(query="verification phrase").run())
+    assert parsed["event"] == "saferag.search"
+    assert parsed["vector_store_id"] == "vs_live"
+    assert "ORCHID-LANTERN-27" in parsed["results"][0]["text"]
+
+
+def test_search_knowledge_base_without_store_is_clean_error(monkeypatch):
+    from safe_rag_agent.tools.SearchKnowledgeBase import SearchKnowledgeBase
+
+    monkeypatch.setattr(openai_store, "resolve_vector_store_id", lambda d, explicit=None: None)
+    parsed = json.loads(SearchKnowledgeBase(query="anything").run())
+    assert parsed["event"] == "saferag.error"

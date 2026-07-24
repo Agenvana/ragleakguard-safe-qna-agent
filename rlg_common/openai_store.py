@@ -72,6 +72,29 @@ def iter_vector_store_chunks(vector_store_id: str) -> Iterator[Dict[str, Any]]:
                 yield {"id": f"{label}#chunk{i}", "text": text, "collection": vector_store_id}
 
 
+def search_vector_store(vector_store_id: str, query: str, max_results: int = 5) -> list:
+    """Semantic search over the store's parsed chunks. Returns retrieved
+    passages (this is the Q&A retrieval path, not a scan: only documents that
+    passed, or were explicitly accepted through, the ingestion gate live in
+    the store). Resolves at call time, so it works in the same session as the
+    first ingestion, before FileSearch attaches at next boot."""
+    client = _client()
+    page = client.vector_stores.search(
+        vector_store_id=vector_store_id, query=query, max_num_results=max_results
+    )
+    out = []
+    for r in getattr(page, "data", []) or []:
+        text = " ".join(
+            getattr(part, "text", "") or "" for part in (getattr(r, "content", []) or [])
+        ).strip()
+        out.append({
+            "file": getattr(r, "filename", None) or getattr(r, "file_id", "unknown"),
+            "score": getattr(r, "score", None),
+            "text": text,
+        })
+    return out
+
+
 def upload_file_to_vector_store(vector_store_id: str, path: str) -> str:
     """Upload a local file and attach it to the vector store. Returns file id."""
     client = _client()

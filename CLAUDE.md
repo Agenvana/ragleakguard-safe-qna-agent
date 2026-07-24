@@ -19,6 +19,11 @@ silently breaking the contract.
   after every change; new content-touching tools need a matching test.
 - Route all detection through `rlg_common/summary.py`; route all store access
   through `rlg_common/openai_store.py` (they are the tested seams).
+- Scan tools return metadata ONLY. `SearchKnowledgeBase` is the one deliberate
+  exception: it returns retrieved passages because retrieval IS the product,
+  and everything in the store already passed (or was explicitly accepted
+  through) the ingestion gate. Never blur the two: a scan tool must never
+  return content, and retrieval must never be presented as a scan result.
 
 ## Architecture in 30 seconds
 
