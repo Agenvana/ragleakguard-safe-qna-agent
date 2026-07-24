@@ -50,6 +50,23 @@ post-processing. Global + US entities by default; `locale='au'` adds
 Australian identifiers (TFN, ABN, ACN, Medicare, AU phones) with checksum
 validation.
 
+## Try it in 2 minutes
+
+Deploy, then type these exact prompts. Only the prompts are scripted: the
+responses are live, and the gate is code, so any phrasing that means
+"remember this" meets the same scan.
+
+1. `Please add /app/README.md to your knowledge base.`
+   Expect a refusal with findings by type and count: this README ships
+   inside the container and deliberately fails its own scan.
+2. `That file is public documentation with no real personal data. I accept the risk; ingest it with force=true.`
+   Expect ingestion with the risk acknowledged. Explicit consent is the only
+   override.
+3. `Now audit your knowledge base: what does it currently remember?`
+   Expect a chunk-level report with risk level and fully-masked samples.
+4. Ask it a question about the document; it answers from what it safely
+   remembers.
+
 ## Quick start (local, for developers)
 
 Requires **Python 3.12** (agency-swarm needs ≥3.12; ragleakguard's detection
